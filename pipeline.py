@@ -7,7 +7,16 @@ PreferenceMatch = namedtuple("PreferenceMatch", ["product_name", "product_codes"
 
 def main(product_data, include_tags, exclude_tags):
     """The implementation of the pipeline test."""
-    pass
+    matches = []
+
+    for product in product_data:
+       if (any(tag in product['tags'] for tag in include_tags) & all(tag not in product['tags'] for tag in exclude_tags)):
+           matching = PreferenceMatch(product_name=product['name'], product_codes=[product['code']]) ### make product_codes as a list of string: ['A12345']
+           matches.append(matching)
+           # print(matches[0].product_codes)
+           # print('\n', matching.product_name, '\n', matching.product_codes, '\n')
+           # print(matching, '\n\n') 
+    return matches
 
 
 if __name__ == "__main__":
